@@ -1,7 +1,6 @@
 # CMPS 2200  Recitation 04
 
-**Name (Team Member 1):**_________________________  
-**Name (Team Member 2):**_________________________
+**Name (Team Member 1):** Sophie Strobl 
 
 
 In this lab you will practice using the `map` and `reduce` functions. These functions are commonly used together in a `map-reduce` framework, used by Google and others to parallelize and scale common computations.
@@ -36,10 +35,14 @@ To use this function to count words, you'll need to implement your own `map_f` a
 
 4. Assume that a word `w` appears `n` times. What is the **work** and **span** of `word_count_reduce` for this word, assuming a parallel implementation of the `reduce` function?
 
-**Enter answer here**
+Work: The total work done by the reduce function is O(n) since it sums up all occurrences of the word.
+
+Span: Since reduce can be implemented in parallel using a balanced binary tree approach, the span is O(log n).
 
 
 5. Why are we going through all this trouble? Couldn't I just use this function to count words?
+
+The simple function works for small datasets, but map-reduce is designed for large-scale, distributed processing. It allows parallel execution across multiple machines, making it faster and more scalable for massive datasets. Also, it ensures fault tolerance, redistributing tasks if a machine fails. While the simple function is fine for small tasks, map-reduce is better at efficiently handling big data.
 
 ```python
 docs = ['i am sam i am', 'sam is ham']
@@ -52,7 +55,7 @@ for doc in docs:
 
 What is the problem that prevents us from easily parallelizing this solution?
 
-**Enter answer here**
+The main problem preventing easy parallelization of the simple solution is shared state and race conditions. The function uses a single, shared dictionar that multiple parallel tasks would need to update simultaneously. This leads to race conditions, where multiple threads or processes might try to modify the dictionary at the same time, causing incorrect counts or requiring locks, which slow down execution.
 
 
 ## Part 2: Sentiment analysis
